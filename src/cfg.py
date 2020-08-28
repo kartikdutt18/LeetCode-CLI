@@ -1,6 +1,25 @@
+import os
+
+#Set base path.
+BASE_PATH = "./"
+CACHE_PATH = os.path.join(BASE_PATH, "cache")
+CACHED_QUESTION = os.path.join(CACHE_PATH,  "cache.json")
+SNIPPET_PATH = os.path.join(BASE_PATH, "snippets/")
+
+# Snippet-config.
+INCLUDE_LIBS_KEY = "header"
+MAIN_KEY = "main"
+
+################# Query Config #################
+
 # Set source websites.
 SRC_WEBSITE = "https://leetcode.com/"
 QUERY_EXTENTION = "graphql/"
+PROBLEM_EXTENTION = "problems/"
+
+# PARAMETERS For setting query keys.
+QUESTION_KEY = "variables"
+QUESTION_QUERY_KEY = "titleSlug"
 
 # Set JSON Format.
 data = {"operationName": "questionData",
