@@ -17,6 +17,15 @@ class LeetCodeCLI() :
                         language : str,
                         showHints = False,
                         showSuggestions = False) :
+    """
+      Creates a code snippet with predefined code snippet and adds the given question
+      as comments. If no predefined snippet is found, an empty file is created with
+      given question as comments.
+      args :
+      language : Language for which file will be created.
+      showHints : Boolean, If true, shows hints if any. Defaults to False.
+      showSuggestions : Boolean, If true, shows suggested questions. Defaults to False.
+    """
     soup = bs(self.questionData['data']['question']['content'], 'lxml')
     title = self.questionData['data']['question'][TITLE_KEY]
     text = soup.get_text().replace('\n\n\n\n', ' ')
@@ -84,7 +93,20 @@ class LeetCodeCLI() :
       json.dump(response, cachedQuestion)
     return response
 
+  def GetSuggestion(self) :
+    text = ""
+    text = text + "\n Suggested Questions :\n"
+    questionList = self.questionData['data']['question']['similarQuestions'].split(
+        "\"title\":")
+    for question in questionList:
+      if question[0] == "[":
+        continue
+    text = text + question.split(',')[0].replace("\"", "") + "\n"
+    #print(text)
+
 if __name__ == "__main__":
   obj = LeetCodeCLI("Two Sum")
   obj.CreateCodeSnippet("pyThon", True, True)
   obj.CreateCodeSnippet("C++", True, False)
+  obj2 = LeetCodeCLI("")
+  obj2.GetSuggestion()
