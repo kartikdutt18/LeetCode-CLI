@@ -1,6 +1,7 @@
 import requests
 import json
 from bs4 import BeautifulSoup as bs
+import re
 from utils import *
 from cfg import *
 from create_snippet import *
@@ -12,17 +13,35 @@ class LeetCodeCLI() :
     self.questionData = self.FetchQuestion()
     self.languageFileExtention = {'c++' : 'cpp', 'python' : 'py', 'java' : 'java'}
 
-  def CreateCodeSnippet(self, language : str) :
+  def CreateCodeSnippet(self,
+                        language : str,
+                        showHints = False,
+                        showSuggestions = False) :
     soup = bs(self.questionData['data']['question']['content'], 'lxml')
-    title = self.questionData['data']['question']['title']
+    title = self.questionData['data']['question'][TITLE_KEY]
     text = soup.get_text().replace('\n\n\n\n', ' ')
 
-    # Add Link to question in the text.
     text = text.strip()
+    # Show Hints.
+    if showHints :
+      text = text + "\n Hints :\n"
+      for hints in self.questionData['data']['question']['hints'] :
+        text = text + hints + "\n"
+
+    # Show suggestions.
+    if showSuggestions :
+      text = text + "\n Suggested Questions :\n"
+      questionList = self.questionData['data']['question']['similarQuestions'].split("\"title\":")
+      for question in questionList:
+        if question[0] == "[" :
+          continue
+        text = text + question.split(',')[0].replace("\"", "") + "\n"
+
+    # Add Link to question in the text.
     text = text + "\n Link : " + SRC_WEBSITE + PROBLEM_EXTENTION + self.questionName
 
     # clean up.
-    text = title.strip() + text.strip()
+    text = title.strip() + "\n" + text.strip()
 
     # Create code snippet.
     file_name = "_".join(self.questionName.split('-'))
@@ -67,5 +86,5 @@ class LeetCodeCLI() :
 
 if __name__ == "__main__":
   obj = LeetCodeCLI("Two Sum")
-  obj.CreateCodeSnippet("pyThon")
-  obj.CreateCodeSnippet("C++")
+  obj.CreateCodeSnippet("pyThon", True, True)
+  obj.CreateCodeSnippet("C++", True, False)

@@ -21,6 +21,9 @@ PROBLEM_EXTENTION = "problems/"
 QUESTION_KEY = "variables"
 QUESTION_QUERY_KEY = "titleSlug"
 
+# Parameter that holds the title of the Question.
+TITLE_KEY = "title"
+
 # Set JSON Format.
 data = {"operationName": "questionData",
         "variables": {"titleSlug": "two-sum"},
