@@ -1,4 +1,5 @@
 from cfg import INCLUDE_LIBS_KEY, MAIN_KEY, SNIPPET_PATH
+import json
 import os
 
 class CreateSnippet():
@@ -17,13 +18,13 @@ class CreateSnippet():
     """
     extention = filename.split('.')[1]
     snippetPath = os.path.join(
-        SNIPPET_PATH, self.extentionLanguage[extention] + "snipet.json")
+        SNIPPET_PATH, self.extentionLanguage[extention] + "_snippet.json")
     if os.path.exists(snippetPath) :
       with open(snippetPath, 'r') as snippetMap:
         snippet = json.load(snippetMap)
       try :
         text = self.Commentify(text, self.extentionLanguage[extention])
-        code = snippetMap[INCLUDE_LIBS_KEY] + text + snippetMap[MAIN_KEY]
+        code = snippet[INCLUDE_LIBS_KEY] + text + snippet[MAIN_KEY]
         file = open(os.path.join(os.getcwd(), filename), 'w')
         file.write(code)
       except KeyError:
@@ -44,10 +45,10 @@ class CreateSnippet():
       Returns commented text.
     """
     if language == "cpp" or language == "java":
-      text = "/**\n " + text.replace('\n', '\n* ') + "\n**/"
+      text = "\n\n/**\n * " + text.replace('\n', '\n * ') + "\n**/\n\n"
       return text
     elif language == "python":
-      text = "\"\"\" \n" + text + "\n\"\"\""
+      text = "\n\n\"\"\" \n" + text + "\n\"\"\"\n\n"
       return text
 
     return text

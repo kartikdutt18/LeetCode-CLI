@@ -7,8 +7,8 @@ CACHED_QUESTION = os.path.join(CACHE_PATH,  "cache.json")
 SNIPPET_PATH = os.path.join(BASE_PATH, "snippets/")
 
 # Snippet-config.
-INCLUDE_LIBS_KEY = "header"
-MAIN_KEY = "main"
+INCLUDE_LIBS_KEY = 'header'
+MAIN_KEY = 'main'
 
 ################# Query Config #################
 
