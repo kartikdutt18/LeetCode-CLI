@@ -5,6 +5,9 @@ output.txt
 # Test files.
 test.py
 
+# Cache file
+cache/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
