@@ -5,6 +5,7 @@ import re
 from utils import *
 from cfg import *
 from create_snippet import *
+import argparse
 
 class LeetCodeCLI() :
   def __init__(self, questionName : str) :
@@ -105,8 +106,13 @@ class LeetCodeCLI() :
     #print(text)
 
 if __name__ == "__main__":
-  obj = LeetCodeCLI("Two Sum")
-  obj.CreateCodeSnippet("pyThon", True, True)
-  obj.CreateCodeSnippet("C++", True, False)
-  obj2 = LeetCodeCLI("")
-  obj2.GetSuggestion()
+  parser = argparse.ArgumentParser(description='Get LeetCode Questions.')
+  parser.add_argument('questionName', nargs='+')
+  args = parser.parse_args()
+  args.questionName = ' '.join(args.questionName)
+  print(args.questionName)
+  obj = LeetCodeCLI(args.questionName)
+  #obj.CreateCodeSnippet("pyThon", True, True)
+  #obj.CreateCodeSnippet("C++", True, False)
+  #obj2 = LeetCodeCLI("")
+  #obj2.GetSuggestion()
